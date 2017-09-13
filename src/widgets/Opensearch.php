@@ -91,7 +91,7 @@ class Opensearch extends Widget
             var_dump($model->getSearchword());
         }*/
 
-        return \Yii::$app->view->render('@app/views/widgets/opensearch.twig', [
+        return \Yii::$app->view->render($this->viewPath.'/opensearch.twig', [
             'autocomplete' => $autocomplete,
             'searchword' => $searchword,
             'renderSearchbox' => $renderSearchbox,

@@ -1,0 +1,58 @@
+{{ use('yii/bootstrap/ActiveForm') }}
+{{ use('Yii') }}
+
+{% set form = active_form_begin({
+    'id' : 'opensearch-form',
+    'action' : [null],
+}) %}
+-----------
+<div class="opensearch">
+    <div class="row">
+        {% if renderSearchbox == true %}
+        <div class="col-md-12">
+            <p>{{ html.textInput('searchword') | raw }} {{ html.submitButton('Submit') | raw }}</p>
+            <!--<p> form.field(model, 'searchword').textInput() | raw </p>-->
+        </div>
+        {% endif %}
+
+        <div class="col-md-12">
+            <p><b>Searching for:</b> {{ searchword }}</p>
+        </div>
+        <div class="col-md-12">
+            <p><b>Results:</b> {{ results.getNumberOfResults() }}/{{ results.getTotalNumberFound() }}</p>
+        </div>
+        <div class="col-md-12">
+            <p><b>Autocomplete:</b> {% for words in autocomplete %}{{ words }} {% endfor %}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="osscmnrdr oss-result">
+                {% for result in results %}
+                <hr>
+                <div class="osscmnrdr ossfieldrdr1">
+                    <a target="_top" href="#{{ result.getField('url') }}">{{ result.getField('title') }}</a>
+                </div>
+                <div class="osscmnrdr ossfieldrdr2">
+                    {{ result.content }}
+                </div>
+                <div class="osscmnrdr ossfieldrdr3">
+                    {{ result.url }}
+                </div>
+                <div class="osscmnrdr ossfieldrdr4"></div>
+                {% endfor %}
+
+                <div class="osscmnrdr oss-paging text-center">
+                    &nbsp;<strong><a href="?query={{ searchword || url_encode }}&amp;page=1" class="osscmnrdr oss-currentpage ">1</a></strong>&nbsp;
+                    &nbsp;<a href="?query={{ searchword | url_encode }}&amp;page=2" class="osscmnrdr">2</a>&nbsp
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</form>
+
+{{ active_form_end() }}
