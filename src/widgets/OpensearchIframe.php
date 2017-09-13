@@ -11,6 +11,8 @@ use yii\base\Widget;
  */
 class OpensearchIframe extends Widget
 {
+    public $moduleName = 'opensearch';
+
     public $index;
     public $renderer;
 
@@ -18,21 +20,24 @@ class OpensearchIframe extends Widget
     protected $apiKey;
     protected $apiLogin;
 
-    protected $ossApi;
-
     public function init()
     {
         parent::init();
-        $this->apiUrl = 'http://localhost:9090';
-        $this->apiKey = 'oss_key';
-        $this->apiLogin = 'oss_user';
-        $this->index = 'hrzg';
+
+        $module = \Yii::$app->getModule($this->moduleName);
+
+        $this->apiUrl = $module->apiUrl;
+        $this->apiKey = $module->apiKey;
+        $this->apiLogin = $module->apiLogin;
+
+        $this->index = $module->defaultIndex;
+
         $this->renderer = 'default';
     }
 
     public function run()
     {
-        $srcUrl = 'https://'.$this->apiUrl.'/renderer?';
+        $srcUrl = $this->apiUrl.'/renderer?';
         $indexParam = 'use='.$this->index;
         $nameParam = '&name='.$this->renderer;
         $loginParam = '&login='.$this->apiLogin;

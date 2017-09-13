@@ -10,10 +10,11 @@ Config
 ...
 'modules => [
 	'opensearch' => [
-		'class'     => '\hrzg\opensearch\Module',
-		'apiUrl'    => 'https://oss.dmstr.net',
-		'apiKey'    => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-		'apiLogin'  => 'oss_user',
+		'class'         => '\hrzg\opensearch\Module',
+		'apiUrl'        => 'http://localhost:9090',
+		'apiLogin'      => 'oss_user',
+		'apiKey'        => 'oss_key',
+		'defaultIndex'  => 'default',
 	]
 ]
 ...

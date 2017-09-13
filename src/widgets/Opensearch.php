@@ -14,6 +14,8 @@ use OpenSearchServer\Search\Field\Search;
  */
 class Opensearch extends Widget
 {
+    public $moduleName = 'opensearch';
+
     public $index;
     public $postvar;
 
@@ -26,12 +28,15 @@ class Opensearch extends Widget
     public function init()
     {
         parent::init();
-        //$this->apiUrl = 'oss.dmstr.net'; // <-- causes unnoticeable 301 redirect from http to https with loosing request body due to missing CURL_REDIR_POST_ALL setting
-        $this->apiUrl = 'http://localhost:9090';
-        $this->apiKey = 'oss_key';
-        $this->apiLogin = 'oss_user';
 
-        $this->index = 'hrzg';
+        $module = \Yii::$app->getModule($this->moduleName);
+
+        //$this->apiUrl = 'oss.dmstr.net'; // <-- causes unnoticeable 301 redirect from http to https with loosing request body due to missing CURL_REDIR_POST_ALL setting
+        $this->apiUrl = $module->apiUrl;
+        $this->apiKey = $module->apiKey;
+        $this->apiLogin = $module->apiLogin;
+
+        $this->index = $module->defaultIndex;
 
         $this->ossApi = new Handler(array('url' => $this->apiUrl, 'key' => $this->apiKey, 'login' => $this->apiLogin));
     }
@@ -64,27 +69,11 @@ class Opensearch extends Widget
         $results = [];
 
         if($searchword) {
-            // AUTOCOMPLETE
-            $autocompleteRequest = new \OpenSearchServer\Autocompletion\Query();
-            $autocompleteRequest->index($this->index)
-                ->name('autocomplete')
-                ->query($searchword)
-                ->rows(10);
-            $autocomplete = $this->ossApi->submit($autocompleteRequest);
-            // SEARCH
-            $request = new Search();
-            $request->index($this->index)
-                ->query('agb')
-            ->searchFields(array('title', 'content'))
-            ->returnedFields('title', 'content', 'url');
-            $results = $this->ossApi->submit($request);
-        } else {
-            $searchword = 'AGB';
             // autocomplete
             $autocompleteRequest = new \OpenSearchServer\Autocompletion\Query();
             $autocompleteRequest->index($this->index)
                 ->name('autocomplete')
-                ->query('agb')
+                ->query($searchword)
                 ->rows(10);
             $autocomplete = $this->ossApi->submit($autocompleteRequest);
             // default search for testing
