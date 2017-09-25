@@ -11,26 +11,14 @@
         {% if renderSearchbox == true %}
         <div class="col-md-12">
             <p>{{ html.textInput('query', query) | raw }} {{ html.submitButton('Submit') | raw }}</p>
-            <!--<p> form.field(model, 'searchword').textInput() | raw </p>-->
         </div>
         {% endif %}
-
-        <div class="col-md-12">
-            <p><b>Searching for:</b> {{ query }}</p>
-        </div>
-        <div class="col-md-12">
-            <p><b>Results:</b> {{ results.getNumberOfResults() }}/{{ results.getTotalNumberFound() }}</p>
-        </div>
-        <div class="col-md-12">
-            <p><b>Autocomplete:</b> {% for words in autocomplete %}{{ words }} {% endfor %}</p>
-        </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
             <div class="osscmnrdr oss-result">
                 {% for result in results %}
-                <hr>
                 <div class="osscmnrdr ossfieldrdr1">
                     <a target="_top" href="{{ result.getField('url') }}">{{ loop.index }}. {{ result.getField('title') }}</a>
                 </div>
@@ -40,9 +28,8 @@
                 <div class="osscmnrdr ossfieldrdr3">
                     {{ result.getField('url') }}
                 </div>
-                <div class="osscmnrdr ossfieldrdr4"></div>
+                <br />
                 {% endfor %}
-
                 <div class="osscmnrdr oss-paging text-center">
                     {% for i in 1..pages %}
                     {% if pages > 1 %}
@@ -59,7 +46,5 @@
     </div>
 
 </div>
-
-</form>
 
 {{ active_form_end() }}
