@@ -10,13 +10,13 @@
     <div class="row">
         {% if renderSearchbox == true %}
         <div class="col-md-12">
-            <p>{{ html.textInput('searchword') | raw }} {{ html.submitButton('Submit') | raw }}</p>
+            <p>{{ html.textInput('query', query) | raw }} {{ html.submitButton('Submit') | raw }}</p>
             <!--<p> form.field(model, 'searchword').textInput() | raw </p>-->
         </div>
         {% endif %}
 
         <div class="col-md-12">
-            <p><b>Searching for:</b> {{ searchword }}</p>
+            <p><b>Searching for:</b> {{ query }}</p>
         </div>
         <div class="col-md-12">
             <p><b>Results:</b> {{ results.getNumberOfResults() }}/{{ results.getTotalNumberFound() }}</p>
@@ -32,7 +32,7 @@
                 {% for result in results %}
                 <hr>
                 <div class="osscmnrdr ossfieldrdr1">
-                    <a target="_top" href="#{{ result.getField('url') }}">{{ result.getField('title') }}</a>
+                    <a target="_top" href="{{ result.getField('url') }}">{{ loop.index }}. {{ result.getField('title') }}</a>
                 </div>
                 <div class="osscmnrdr ossfieldrdr2">
                     {{ result.getField('content') }}
@@ -44,8 +44,15 @@
                 {% endfor %}
 
                 <div class="osscmnrdr oss-paging text-center">
-                    &nbsp;<strong><a href="?query={{ searchword | url_encode }}&amp;page=1" class="osscmnrdr oss-currentpage ">1</a></strong>&nbsp;
-                    &nbsp;<a href="?query={{ searchword | url_encode }}&amp;page=2" class="osscmnrdr">2</a>&nbsp
+                    {% for i in 1..pages %}
+                    {% if pages > 1 %}
+                    {% if i == page %}
+                    <strong><a href="?query={{ query | url_encode }}&amp;page={{ i }}" class="osscmnrdr oss-currentpage">{{ i }}</a></strong>
+                    {% else %}
+                    <a href="?query={{ query | url_encode }}&amp;page={{ i }}" class="osscmnrdr">{{ i }}</a>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>

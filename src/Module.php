@@ -13,4 +13,5 @@ class Module extends \yii\base\Module
     public $apiLogin = 'oss_user';
     public $apiKey = 'oss_key';
     public $defaultIndex = 'default';
+    public $resultsPerPage = 10;
 }

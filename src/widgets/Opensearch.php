@@ -17,6 +17,7 @@ class Opensearch extends Widget
     public $moduleName = 'opensearch';
 
     public $index;
+    public $resultsPerPage;
     public $postvar;
 
     protected $apiUrl;
@@ -37,6 +38,7 @@ class Opensearch extends Widget
         $this->apiLogin = $module->apiLogin;
 
         $this->index = $module->defaultIndex;
+        $this->resultsPerPage = $module->resultsPerPage;
 
         $this->ossApi = new Handler(array('url' => $this->apiUrl, 'key' => $this->apiKey, 'login' => $this->apiLogin));
     }
@@ -54,32 +56,40 @@ class Opensearch extends Widget
             print_r($item);
         }*/
 
-        $searchword = '';
+        $query = '';
+        $page = 1;
         $renderSearchbox = true;
         $postData = \Yii::$app->request->post();
+        $getData = \Yii::$app->request->get();
         if($this->postvar) {
             $renderSearchbox = false;
             if(isset($postData[$this->postvar])) {
-                $searchword = $postData[$this->postvar];
+                $query = $postData[$this->postvar];
             }
-        } else if(isset($postData['searchword'])) {
-            $searchword = $postData['searchword'];
+        } else if(isset($postData['query'])) {
+            $query = $postData['query'];
+
+        } else if(isset($getData['query'])) {
+            $query = $getData['query'];
         }
         $autocomplete = [];
         $results = [];
+        $page = (isset($getData['page'])) ? intval($getData['page']) : 1;
 
-        if($searchword) {
+        if($query) {
             // autocomplete
             $autocompleteRequest = new \OpenSearchServer\Autocompletion\Query();
             $autocompleteRequest->index($this->index)
                 ->name('autocomplete')
-                ->query($searchword)
-                ->rows(10);
+                ->query($query)
+                ->rows($this->resultsPerPage);
             $autocomplete = $this->ossApi->submit($autocompleteRequest);
             // default search for testing
+            $offset = ($page-1)*$this->resultsPerPage;
             $request = new Search();
             $request->index($this->index)
-                ->query($searchword)
+                ->query($query)
+                ->start($offset)
                 ->searchFields(array('title', 'content'))
                 ->returnedFields(array('title', 'content', 'url'));
             $results = $this->ossApi->submit($request);
@@ -91,11 +101,15 @@ class Opensearch extends Widget
             var_dump($model->getSearchword());
         }*/
 
+        $pages = ($results) ? ceil($results->getTotalNumberFound() / $this->resultsPerPage) : 1;
+
         return \Yii::$app->view->render('@hrzg/opensearch/views/opensearch.twig', [
             'autocomplete' => $autocomplete,
-            'searchword' => $searchword,
+            'query' => $query,
             'renderSearchbox' => $renderSearchbox,
             'results' => $results,
+            'pages' => $pages,
+            'page' => $page
             //'model' => $model
         ]);
     }
