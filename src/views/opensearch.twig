@@ -5,7 +5,7 @@
     'id' : 'opensearch-form',
     'action' : [null],
 }) %}
------------
+
 <div class="opensearch">
     <div class="row">
         {% if renderSearchbox == true %}
@@ -35,16 +35,16 @@
                     <a target="_top" href="#{{ result.getField('url') }}">{{ result.getField('title') }}</a>
                 </div>
                 <div class="osscmnrdr ossfieldrdr2">
-                    {{ result.content }}
+                    {{ result.getField('content') }}
                 </div>
                 <div class="osscmnrdr ossfieldrdr3">
-                    {{ result.url }}
+                    {{ result.getField('url') }}
                 </div>
                 <div class="osscmnrdr ossfieldrdr4"></div>
                 {% endfor %}
 
                 <div class="osscmnrdr oss-paging text-center">
-                    &nbsp;<strong><a href="?query={{ searchword || url_encode }}&amp;page=1" class="osscmnrdr oss-currentpage ">1</a></strong>&nbsp;
+                    &nbsp;<strong><a href="?query={{ searchword | url_encode }}&amp;page=1" class="osscmnrdr oss-currentpage ">1</a></strong>&nbsp;
                     &nbsp;<a href="?query={{ searchword | url_encode }}&amp;page=2" class="osscmnrdr">2</a>&nbsp
                 </div>
             </div>

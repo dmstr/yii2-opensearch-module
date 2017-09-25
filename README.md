@@ -28,11 +28,11 @@ Examples with `yii2-prototype-module`
 - [Twig documentation](http://twig.sensiolabs.org/documentation)
 
 ```
-{{ use ('dmstr/opensearch/widgets') }}
+{{ use ('hrzg/opensearch/widgets') }}
 {{ opensearch_widget({index: 'hrzg'}) }}
 ```
 
 ```
-{{ use ('dmstr/opensearch/widgets') }}
+{{ use ('hrzg/opensearch/widgets') }}
 {{ opensearch_iframe_widget({index: 'hrzg', renderer: 'default'}) }}
 ```

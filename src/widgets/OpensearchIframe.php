@@ -45,7 +45,7 @@ class OpensearchIframe extends Widget
 
         $iframeSrc = $srcUrl.$indexParam.$nameParam.$loginParam.$keyParam;
 
-        return \Yii::$app->view->render('@dmstr/opensearch/views/opensearchIframe.twig', [
+        return \Yii::$app->view->render('@hrzg/opensearch/views/opensearchIframe.twig', [
             'iframeSrc' => $iframeSrc,
         ]);
     }
