@@ -6,8 +6,15 @@
 <div class="opensearch">
     <div class="row">
         {% if renderSearchbox == true %}
-        <div class="col-md-12">
-            <p>{{ html.textInput('query', query) | raw }} {{ html.submitButton('Submit') | raw }}</p>
+        <div class="col-md-12 ">
+            <div class="row form-group">
+                <div class="col-md-11">
+                    {{ html.textInput('query', query, { 'class': 'form-control' }) | raw }}
+                </div>
+                <div class="col-md-1">
+                    {{ html.submitButton('Submit', { 'class': 'btn btn-default' }) | raw }}
+                </div>
+            </div>
         </div>
         {% endif %}
     </div>
