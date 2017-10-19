@@ -30,7 +30,9 @@ class OpensearchIframe extends Widget
         $this->apiKey = $module->apiKey;
         $this->apiLogin = $module->apiLogin;
 
-        $this->index = $module->defaultIndex;
+        if (!$this->index) {
+            $this->index = $module->defaultIndex;
+        }
 
         $this->renderer = 'default';
     }
