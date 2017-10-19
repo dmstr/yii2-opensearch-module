@@ -27,12 +27,16 @@ Examples with `yii2-prototype-module`
 - [Yii 2.0 Twig extension](https://github.com/yiisoft/yii2-twig/tree/master/docs/guide)
 - [Twig documentation](http://twig.sensiolabs.org/documentation)
 
-```
-{{ use ('hrzg/opensearch/widgets') }}
-{{ opensearch_widget({index: 'hrzg'}) }}
-```
+#### Iframe widget
 
 ```
 {{ use ('hrzg/opensearch/widgets') }}
 {{ opensearch_iframe_widget({index: 'hrzg', renderer: 'default'}) }}
+```
+
+#### Widget with data from API (experimental)
+
+```
+{{ use ('hrzg/opensearch/widgets') }}
+{{ opensearch_widget({index: 'hrzg'}) }}
 ```
