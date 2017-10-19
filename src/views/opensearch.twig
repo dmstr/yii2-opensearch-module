@@ -34,17 +34,17 @@
                 </div>
                 <br />
                 {% endfor %}
-                <div class="osscmnrdr oss-paging text-center">
+                <ul class="pagination pagination-sm oss-paging text-center">
                     {% for i in 1..pages %}
                     {% if pages > 1 %}
                     {% if i == page %}
-                    <strong><a href="?query={{ query | url_encode }}&amp;page={{ i }}" class="osscmnrdr oss-currentpage">{{ i }}</a></strong>
+                    <li class="active"><a href="?query={{ query | url_encode }}&amp;page={{ i }}" class="oss-currentpage">{{ i }}</a></li>
                     {% else %}
-                    <a href="?query={{ query | url_encode }}&amp;page={{ i }}" class="osscmnrdr">{{ i }}</a>
+                    <li><a href="?query={{ query | url_encode }}&amp;page={{ i }}" class="oss-page">{{ i }}</a><li>
                     {% endif %}
                     {% endif %}
                     {% endfor %}
-                </div>
+                </ul>
             </div>
         </div>
     </div>
