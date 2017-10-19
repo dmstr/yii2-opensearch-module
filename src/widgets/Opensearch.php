@@ -37,7 +37,9 @@ class Opensearch extends Widget
         $this->apiKey = $module->apiKey;
         $this->apiLogin = $module->apiLogin;
 
-        $this->index = $module->defaultIndex;
+        if (!$this->index) {
+            $this->index = $module->defaultIndex;
+        }
         $this->resultsPerPage = $module->resultsPerPage;
 
         $this->ossApi = new Handler(array('url' => $this->apiUrl, 'key' => $this->apiKey, 'login' => $this->apiLogin));
