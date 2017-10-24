@@ -17,8 +17,8 @@ class OpensearchIframe extends Widget
     public $renderer;
 
     protected $apiUrl;
-    protected $apiKey;
-    protected $apiLogin;
+    public $apiKey;
+    public $apiLogin;
 
     public function init()
     {
