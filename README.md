@@ -27,11 +27,13 @@ Examples with `yii2-prototype-module`
 - [Yii 2.0 Twig extension](https://github.com/yiisoft/yii2-twig/tree/master/docs/guide)
 - [Twig documentation](http://twig.sensiolabs.org/documentation)
 
+Worth knowing: You could either use the defaults from the module (renderer,apiLogin,apiKey) or use your own (e.g. in the iframe widget example)
+
 #### Iframe widget
 
 ```
 {{ use ('hrzg/opensearch/widgets') }}
-{{ opensearch_iframe_widget({index: 'hrzg', renderer: 'default'}) }}
+{{ opensearch_iframe_widget({index: 'hrzg', renderer: 'default',apiLogin: 'username',apiKey: 'xxx123'}) }}
 ```
 
 #### Widget with data from API (experimental)

@@ -17,8 +17,8 @@ class OpensearchIframe extends Widget
     public $renderer;
 
     protected $apiUrl;
-    protected $apiKey;
-    protected $apiLogin;
+    public $apiKey;
+    public $apiLogin;
 
     public function init()
     {
@@ -27,8 +27,15 @@ class OpensearchIframe extends Widget
         $module = \Yii::$app->getModule($this->moduleName);
 
         $this->apiUrl = $module->apiUrl;
-        $this->apiKey = $module->apiKey;
-        $this->apiLogin = $module->apiLogin;
+
+
+        if (!$this->apiKey) {
+            $this->apiKey   = $module->apiKey;
+        }
+
+        if (!$this->apiLogin) {
+            $this->apiLogin = $module->apiLogin;
+        }
 
         if (!$this->index) {
             $this->index = $module->defaultIndex;
