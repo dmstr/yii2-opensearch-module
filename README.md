@@ -31,7 +31,7 @@ Examples with `yii2-prototype-module`
 
 ```
 {{ use ('hrzg/opensearch/widgets') }}
-{{ opensearch_iframe_widget({index: 'hrzg', renderer: 'default'}) }}
+{{ opensearch_iframe_widget({index: 'hrzg', renderer: 'default',apiLogin: 'username',apiKey: 'xxx123'}) }}
 ```
 
 #### Widget with data from API (experimental)
